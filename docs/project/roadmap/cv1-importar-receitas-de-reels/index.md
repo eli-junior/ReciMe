@@ -1,8 +1,8 @@
 ---
 code: CV1
 level: Value
-status: Planned
-status_reason: fundação documental concluída; aguardando descoberta técnica e planejamento da primeira história
+status: Active
+status_reason: aquisição real validada em um caso; demonstração Android testada; integração e persistência pendentes
 updated: 2026-09-20
 related:
   - ../../decisions/records/2026-09-20T0000Z-validar-fundacao-tecnica-e-extracao.md
@@ -24,7 +24,10 @@ O Navigator consegue concluir o fluxo com um Reel público real, corrigir os cam
 
 ## Próxima decomposição
 
-A primeira Delivery Story deverá começar pela prova de viabilidade e pela escolha de stack: captura de URL compartilhada, acesso permitido ao conteúdo público, análise por IA, tempo, custo e contrato inicial da receita.
+- [DS1 — Fundação e viabilidade](cv1-ds1-fundacao/index.md): aquisição validada em um caso; extração Gemini pendente após `ClientError`.
+- [DS2 — Demonstração da interface Android](cv1-ds2-interface/index.md): implementada e testada pelo Navigator. A importação é simulada e os dados duram apenas durante a sessão.
+
+Captura por compartilhamento Android, extração integrada, backend e persistência continuam futuros. A demonstração não encerra CV1.
 
 ## Fora de escopo
 

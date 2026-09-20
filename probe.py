@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -63,8 +64,8 @@ def reel_url(value: str) -> str:
     url = urlsplit(value)
     if (url.scheme != "https" or url.hostname not in {"instagram.com", "www.instagram.com"}
             or url.username or url.password or url.port not in {None, 443}
-            or not re.fullmatch(r"/reels?/[A-Za-z0-9_-]+/?", url.path)):
-        raise ValueError("Use uma URL https de Reel em instagram.com/reel/CODIGO/.")
+            or not re.fullmatch(r"/(?:reels?|p)/[A-Za-z0-9_-]+/?", url.path)):
+        raise ValueError("Use uma URL https do Instagram em /reel/CODIGO/ ou /p/CODIGO/.")
     return f"https://www.instagram.com{url.path.rstrip('/')}/"
 
 
@@ -73,10 +74,12 @@ def save(path: Path, value: dict) -> None:
 
 
 def acquire(url: str, folder: Path) -> tuple[Path, dict]:
+    if not shutil.which("ffprobe"):
+        raise RuntimeError("Instale FFmpeg (ffprobe) para verificar áudio e vídeo antes da aquisição.")
     command = [sys.executable, "-m", "yt_dlp", "--ignore-config", "--no-playlist",
                "--no-progress", "--retries", "0", "--extractor-retries", "0",
                "--socket-timeout", "20", "--max-filesize", "100M",
-               "-f", "best[ext=mp4][vcodec!=none][acodec!=none]",
+               "-f", "best[ext=mp4][vcodec!=none][acodec!=none]/best[ext=mp4]",
                "--write-info-json", "-o", str(folder / "video.%(ext)s"), url]
     result = subprocess.run(command, capture_output=True, text=True, timeout=120)
     if result.returncode:
@@ -86,6 +89,15 @@ def acquire(url: str, folder: Path) -> tuple[Path, dict]:
     video = folder / "video.mp4"
     if not video.is_file() or not 0 < video.stat().st_size <= 100 * 1024 * 1024:
         raise RuntimeError("Nenhum MP4 com áudio foi obtido dentro do limite de 100 MiB.")
+    inspection = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
+         "-of", "json", str(video)], capture_output=True, text=True, timeout=20,
+    )
+    if inspection.returncode:
+        raise RuntimeError("Não foi possível verificar as faixas do MP4 baixado.")
+    streams = json.loads(inspection.stdout).get("streams", [])
+    if not {"audio", "video"}.issubset({stream.get("codec_type") for stream in streams}):
+        raise RuntimeError("O MP4 baixado não contém ambas as faixas: áudio e vídeo.")
     info = json.loads((folder / "video.info.json").read_text(encoding="utf-8"))
     return video, info
 
@@ -161,6 +173,8 @@ def main() -> int:
         return 0
     except (Exception, KeyboardInterrupt) as error:
         report.update(status="failed", error_type=type(error).__name__)
+        if isinstance(error, RuntimeError):
+            report["error"] = str(error)
         print(f"Falha em {report['stage']}: {type(error).__name__}. Consulte o relatório local.", file=sys.stderr)
         return 1
     finally:

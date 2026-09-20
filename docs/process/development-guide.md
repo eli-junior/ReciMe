@@ -6,7 +6,7 @@ Este é o contrato operacional do ReciMe. Ele adapta Ariad ao projeto; em caso d
 
 Ambiente de desenvolvimento autorizado: Ubuntu-26.04 no WSL. A prova local está em `probe.py`; instalar com `uv sync`, verificar com `uv run pytest -q` e consultar comandos e limites no `README.md`. Banco, backend e app ficam para depois da prova de aquisição e extração. O lockfile fixa as dependências Python da prova.
 
-O projeto está na prova técnica Python: ainda não há app, backend ou banco. A branch principal é `main`. O Navigator autorizou a publicação inicial como repositório público `eli-junior/ReciMe`. O `.env`, ambientes virtuais e resultados em `artifacts/` ficam fora do histórico; `.env.example` contém apenas campos vazios.
+Além da prova Python, há uma demonstração Android em `android/`, com Kotlin + Compose e dados em memória. Backend e banco continuam pendentes. Compilação, testes e roteiro manual estão em `android/README.md`. A branch principal é `main`. O Navigator autorizou a publicação inicial como repositório público `eli-junior/ReciMe`. O `.env`, ambientes virtuais, builds Android e resultados em `artifacts/` ficam fora do histórico; `.env.example` contém apenas campos vazios.
 
 O destino de produção planejado é um miniPC Ubuntu do Navigator, com Docker, domínio próprio e Cloudflare. Mudanças nessa infraestrutura, em DNS e em serviços externos exigem orientação explícita do Navigator.
 

@@ -6,7 +6,7 @@ O ReciMe é um projeto de aprendizado para o Navigator aprender desenvolvimento 
 
 ## Estado atual
 
-O repositório está na preparação inicial. Ainda não há aplicativo, backend, banco de dados ou stack escolhida. A prioridade é estabelecer a fundação técnica e uma primeira entrega pequena, verificável de ponta a ponta.
+Há uma prova Python de aquisição e extração e uma demonstração Android em Kotlin + Jetpack Compose. A aquisição de um Reel real foi validada; a geração Gemini falhou com `ClientError` e foi adiada pelo Navigator. A interface com importação simulada, revisão, salvamento na sessão e busca foi testada pelo Navigator, que optou por mantê-la como está. Ainda não há backend ou banco, nem importação real integrada ao app.
 
 ## Primeira entrega
 
@@ -16,7 +16,7 @@ O app usa português do Brasil. Conteúdo de origem em outro idioma deve ser tra
 
 ## Premissas de arquitetura
 
-- O cliente inicial será Android; a tecnologia mobile ainda será escolhida por uma prova técnica guiada pelo aprendizado.
+- O cliente inicial usa Kotlin + Jetpack Compose, escolha aprovada pelo Navigator para a demonstração Android. Dados em memória são uma limitação da demonstração; o produto continua dependente do backend.
 - O backend e o banco serão hospedados no miniPC Ubuntu do Navigator, com Docker, domínio próprio e Cloudflare.
 - A primeira versão depende de conexão com o backend e será usada inicialmente só pelo Navigator, sem autenticação de produto.
 - A extração usa APIs de IA, sem modelos locais.

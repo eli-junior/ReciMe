@@ -4,7 +4,7 @@ O roadmap registra entregas significativas do ReciMe. Cada item possui seu próp
 
 ## Trilha atual
 
-- [CV1 — Importar e guardar receitas de Reels](cv1-importar-receitas-de-reels/index.md) — `Planned`
+- [CV1 — Importar e guardar receitas de Reels](cv1-importar-receitas-de-reels/index.md) — `Active`
 
 ## Convenções
 

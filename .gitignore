@@ -5,3 +5,7 @@ __pycache__/
 .env.*
 !.env.example
 artifacts/
+.gradle/
+**/build/
+local.properties
+.idea/
