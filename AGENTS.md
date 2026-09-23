@@ -2,7 +2,7 @@
 
 Este projeto usa **Ariad**. O agente é o **Driver**; a pessoa é o **Navigator**.
 
-O ReciMe é um projeto de aprendizado para criar um aplicativo Android pessoal que importa receitas de Reels públicos do Instagram. O fluxo inicial é: compartilhar o link para o app, extrair uma receita a partir de legenda, fala e conteúdo visual, revisar e editar os dados, salvar no backend e encontrá-los por nome.
+O ReciMe é um projeto de aprendizado para criar um produto web pessoal com uma ponte Android para importar receitas de Reels públicos do Instagram. O fluxo inicial é: compartilhar o link para o app, encaminhar a URL à API, processar a extração no backend e encontrar na web novas receitas para ajustar, revisar e salvar na coleção.
 
 ## Contexto obrigatório
 
@@ -23,9 +23,9 @@ Antes de trabalho relevante, leia os arquivos que existirem nesta ordem:
 ## Direção do produto
 
 - O ReciMe original é referência funcional, não um alvo visual a ser copiado.
-- A primeira versão é Android e atende inicialmente um único usuário, sem autenticação de produto.
+- A primeira versão tem interface web e uma ponte Android de compartilhamento e atende inicialmente um único usuário, sem autenticação de produto.
 - O app depende do backend; funcionamento offline não faz parte da primeira versão.
-- A receita precisa ser revisável antes de salvar: título, ingredientes e etapas são editáveis.
+- A receita precisa ser revisável na web antes de entrar na coleção: título, ingredientes e etapas são editáveis. Importações e rascunhos são persistidos antes da revisão.
 - A extração nunca deve inventar informação. Ausências devem aparecer como `não informado`.
 - A importação começa por Reels de contas públicas. Falhas de acesso devem ser explicadas de forma clara.
 - A interface e a saída da extração são em português do Brasil; conteúdo estrangeiro deve ser traduzido quando possível.

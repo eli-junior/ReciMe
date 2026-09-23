@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · ReciMe</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Pular para o conteúdo</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="/" aria-label="ReciMe, início"><span class="brand-mark" aria-hidden="true">r.</span>reci<span>me</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="/" {% if active == 'inbox' %}aria-current="page"{% endif %}>Caixa de entrada</a>
+      <a href="/library" {% if active == 'library' %}aria-current="page"{% endif %}>Minha biblioteca</a>
+    </nav>
+    <span class="personal">Seu caderno de receitas</span>
+  </div></header>
+  <div class="demo-banner"><span class="dot" aria-hidden="true"></span><strong>Demonstração</strong><span>Receitas de exemplo. Nenhum vídeo é acessado e nenhuma IA é chamada.</span></div>
+  <main id="main" class="container">{% block content %}{% endblock %}</main>
+  <footer class="site-footer"><span>ReciMe · Receitas para fazer, do seu jeito.</span><span>Feito para guardar boas ideias.</span></footer>
+  <noscript><p class="notice">Ative o JavaScript para enviar links e editar receitas. A biblioteca pode ser consultada sem ele.</p></noscript>
+</body>
+</html>

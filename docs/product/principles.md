@@ -6,11 +6,11 @@ O ReciMe estrutura o que encontrou; não inventa uma quantidade, etapa ou tempo 
 
 ## A pessoa decide antes de salvar
 
-A IA acelera a coleta, mas não encerra a decisão. Toda receita importada passa por revisão e permite editar título, ingredientes e etapas antes de entrar na coleção.
+A IA acelera a coleta, mas não encerra a decisão. Importações e rascunhos são persistidos para revisão posterior. Toda receita importada passa por revisão na web e permite editar título, ingredientes e etapas antes de entrar na coleção.
 
 ## Importar precisa parecer confiável
 
-Enquanto a extração estiver em andamento, o app informa progresso e permite cancelar. Quando não conseguir acessar ou interpretar um Reel, explica o motivo e oferece uma saída compreensível.
+A ponte Android confirma o recebimento da URL pela API ou explica a falha de envio. O processamento segue no backend, e a web mostra o andamento e novas receitas pendentes para ajustar. Quando não conseguir acessar ou interpretar um Reel, explica o motivo e oferece uma saída compreensível.
 
 ## Uma primeira experiência estreita e completa
 

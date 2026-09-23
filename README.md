@@ -1,10 +1,33 @@
-# ReciMe — prova de extração
+# ReciMe — receitas na web
 
-Projeto de aprendizado Android. Etapa atual: comprovar URL de Reel público → vídeo/legenda → receita estruturada, antes de escolher backend e banco.
+Projeto de aprendizado com interface web e uma futura ponte Android para encaminhar URLs à API. A entrega atual implementa uma caixa de entrada web, revisão, biblioteca e persistência SQLite, com **extração simulada e identificada na interface**. Está pronta para validação manual; a extração real e a integração Android continuam pendentes.
 
-A interface Android em Kotlin + Compose está em [`android/`](android/README.md), com importação simulada e receitas mantidas durante a sessão. Essa frente foi antecipada pelo Navigator enquanto a integração Gemini permanece pendente. Consulte o roteiro de compilação e validação nessa pasta.
+## Executar a web com uv local
 
-## Executar no Ubuntu WSL
+Na raiz do projeto, em PowerShell:
+
+```powershell
+uv sync
+uv run uvicorn recime.app:app --host 127.0.0.1 --port 8000
+```
+
+Em outro terminal na mesma pasta:
+
+```powershell
+uv run python -m recime.worker
+```
+
+Abra <http://127.0.0.1:8000>, use o link de exemplo e adicione à caixa. O executor prepara a amostra para ajustar; após sua confirmação, ela entra na biblioteca. Dados ficam em `data/recime.sqlite3` e sobrevivem ao reinício. A demonstração não baixa vídeos, não chama IA e não precisa de FFmpeg ou `.env`.
+
+Testes: `uv run pytest -q`. [Roteiro de validação](docs/project/roadmap/cv1-importar-receitas-de-reels/cv1-ds3-caixa-de-entrada-web/test-guide.md), com reinício, falhas, duplicatas e edição em duas abas. API e executor precisam rodar juntos, com o mesmo banco. Encerre cada processo com Ctrl+C. Serviço restrito ao computador local; hospedagem externa pertence a uma etapa posterior.
+
+## Demonstração Android anterior
+
+A interface Android em Kotlin + Compose está em [`android/`](android/README.md), com importação simulada e receitas mantidas durante a sessão. Essa frente foi antecipada pelo Navigator enquanto a integração Gemini permanece pendente. Desde 2026-09-22, a demonstração é referência histórica: a interface do produto será web, e o Android ficará restrito ao envio de URLs à API. Consulte o roteiro de compilação e validação nessa pasta.
+
+## Prova de extração real — roteiro anterior no Ubuntu WSL
+
+Os comandos abaixo documentam a prova anterior, independente da demonstração web. O trabalho atual usa `uv` local no Windows; não é necessário passar pelo WSL para usar a web.
 
 Instale o FFmpeg (`sudo apt-get install ffmpeg`); a prova usa `ffprobe` para verificar as faixas do arquivo baixado.
 
@@ -46,4 +69,4 @@ Condição de aprovação: `report.json` com `status: acquired`, legenda em `vid
 
 Esta CLI é operada localmente com URLs escolhidas pelo Navigator; não é um endpoint público. Validação de host de entrada não substitui proteção de rede/redirects necessária antes de aceitar URLs de terceiros num servidor.
 
-Há uma demonstração da interface Android; API e banco ainda não foram implementados. Nutrição foi excluída deliberadamente do primeiro escopo, conforme o briefing consolidado.
+Há demonstrações Android e web; a web usa API e banco reais, mas o extrator ainda é simulado. Nutrição foi excluída deliberadamente do primeiro escopo, conforme o briefing consolidado.

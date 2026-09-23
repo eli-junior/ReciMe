@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<a class="back-link" href="/">← Caixa de entrada</a>
+<section class="compact-heading"><p class="eyebrow">UM TOQUE SEU FAZ A DIFERENÇA</p><h1>Ajuste antes de guardar.</h1><p class="lede">Confira o que veio da receita e complete do seu jeito.</p></section>
+{% if item.state == 'ready' %}
+<form id="review-form" data-id="{{ item.id }}" data-version="{{ item.version }}">
+<div class="review-layout"><div class="editor">
+  <section class="paper"><label class="field-heading" for="title">Nome da receita</label><input class="title-input" id="title" maxlength="300" value="{{ item.draft.title or '' }}" placeholder="não informado"></section>
+  <section class="paper"><div class="section-heading"><h2>Ingredientes</h2><span class="small muted">Nome e quantidade</span></div><div id="ingredients">
+  {% for ingredient in item.draft.ingredients %}<div class="ingredient-row edit-row" data-item-id="{{ ingredient.id }}"><label><span class="sr-only">Ingrediente</span><input data-field="name" maxlength="500" value="{{ ingredient.name or '' }}" placeholder="não informado"></label><label><span class="sr-only">Quantidade</span><input data-field="quantity_text" maxlength="200" value="{{ ingredient.quantity_text or '' }}" placeholder="não informado"></label><button type="button" class="remove-button" aria-label="Remover ingrediente">×</button></div>{% endfor %}
+  </div><button type="button" class="text-button add-button" data-add="ingredients">+ Adicionar ingrediente</button></section>
+  <section class="paper"><h2>Modo de preparo</h2><div id="steps">
+  {% for step in item.draft.steps %}<div class="step-row edit-row" data-item-id="{{ step.id }}"><span class="step-number" aria-hidden="true">{{ loop.index }}</span><label><span class="sr-only">Etapa {{ loop.index }}</span><textarea data-field="instruction" maxlength="4000" rows="3" placeholder="não informado">{{ step.instruction or '' }}</textarea></label><button type="button" class="remove-button" aria-label="Remover etapa">×</button></div>{% endfor %}
+  </div><button type="button" class="text-button add-button" data-add="steps">+ Adicionar etapa</button></section>
+</div><aside class="review-aside"><section class="paper"><span class="status ready">Pronta para ajustar</span><h2>Da ideia à sua mesa.</h2><p>Ainda é um rascunho. Confira os campos antes de levar esta receita para a biblioteca.</p><button class="primary full" type="submit">Salvar na biblioteca ↗</button><button class="secondary full" type="button" id="save-draft">Guardar rascunho</button><p id="review-message" class="feedback" role="status" tabindex="-1"></p><button type="button" class="text-button danger" data-action="discard" data-id="{{ item.id }}">Descartar receita</button></section>
+<section class="source-panel"><p class="eyebrow">DE ONDE VEIO</p><a href="{{ item.canonical_url }}" target="_blank" rel="noreferrer">Ver publicação no Instagram ↗</a><p class="small">Autoria: {{ item.draft.author or 'não informado' }}</p><h3>O que vale conferir</h3><ul>{% for warning in item.draft.warnings %}<li>{{ warning }}</li>{% endfor %}</ul><p class="small">Campos vazios aparecem como “não informado”. Você pode mantê-los assim.</p><details><summary>Rascunho de origem</summary><p class="small">Preservado para comparação. Suas correções não alteram esta referência.</p><h3>{{ item.original.title or 'não informado' }}</h3><ul>{% for ingredient in item.original.ingredients %}<li>{{ ingredient.name or 'não informado' }} · {{ ingredient.quantity_text or 'não informado' }}{% for e in ingredient.evidence %}<p>{{ e.channel }}: {{ e.observation }}</p>{% endfor %}</li>{% endfor %}</ul><ol>{% for step in item.original.steps %}<li>{{ step.instruction or 'não informado' }}{% for e in step.evidence %}<p>{{ e.channel }}: {{ e.observation }}</p>{% endfor %}</li>{% endfor %}</ol></details></section>
+</aside></div>
+</form>
+{% else %}
+<section class="paper state-panel" {% if item.state in ['queued','processing'] %}data-poll="detail" data-id="{{ item.id }}" data-state="{{ item.state }}"{% endif %}>
+  <span class="status {{ item.state }}">{{ labels[item.state] }}</span><h2>{{ 'Sua receita está a caminho.' if item.state in ['queued','processing'] else labels[item.state] }}</h2><p>{{ item.error or ('O processamento continua mesmo se você fechar esta página.' if item.state in ['queued','processing'] else 'Você pode voltar à caixa de entrada ou consultar sua biblioteca.') }}</p>
+  {% if item.state == 'queued' %}<p class="small muted">O executor local precisa estar em execução para preparar a amostra.</p>{% endif %}
+  <p><a href="{{ item.canonical_url }}" target="_blank" rel="noreferrer">Publicação original ↗</a></p>
+  {% if item.state == 'failed' %}<button class="primary" data-action="retry" data-id="{{ item.id }}">Tentar novamente</button>{% endif %}
+  {% if item.state in ['failed','queued'] %}<button class="secondary" data-action="discard" data-id="{{ item.id }}">Descartar</button>{% endif %}
+  {% if item.state == 'confirmed' %}<a class="button primary" href="/library">Ir para a biblioteca</a>{% endif %}
+  <p id="action-message" class="feedback" role="status"></p><p id="poll-message" class="small muted" role="status"></p>
+</section>
+{% endif %}
+{% endblock %}

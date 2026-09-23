@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<a class="back-link" href="/library">← Minha biblioteca</a>
+<section class="compact-heading"><p class="eyebrow">DO SEU CADERNO</p><h1>{{ recipe.content.title or 'não informado' }}</h1><p class="lede">Revisada por você. Pronta para consultar quando quiser.</p></section>
+<div class="recipe-detail-layout"><section class="paper"><h2>Ingredientes</h2><ul class="ingredient-list">{% for ingredient in recipe.content.ingredients %}<li><span>{{ ingredient.name or 'não informado' }}</span><span>{{ ingredient.quantity_text or 'não informado' }}</span></li>{% else %}<li>não informado</li>{% endfor %}</ul></section><section class="paper"><h2>Modo de preparo</h2><ol class="method-list">{% for step in recipe.content.steps %}<li><span class="step-number" aria-hidden="true">{{ loop.index }}</span><p>{{ step.instruction or 'não informado' }}</p></li>{% else %}<li>não informado</li>{% endfor %}</ol></section></div>
+<section class="source-panel"><h2>Fonte e observações</h2><a href="{{ recipe.canonical_url }}" target="_blank" rel="noreferrer">Publicação no Instagram ↗</a><p>Autoria: {{ recipe.content.author or 'não informado' }}</p><ul>{% for warning in recipe.content.warnings %}<li>{{ warning }}</li>{% endfor %}</ul></section>
+{% endblock %}

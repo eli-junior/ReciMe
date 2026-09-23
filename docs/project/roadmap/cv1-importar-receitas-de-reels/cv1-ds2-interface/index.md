@@ -25,3 +25,7 @@ Dados, estado e telas estão separados; não foi identificada refatoração bloq
 ## Exclusões
 
 Sem Gemini, backend, persistência, compartilhamento Android ou publicação em loja. Não fecha uma versão funcional do produto. Integração e persistência pertencem às próximas entregas.
+
+## Mudança de direção — 2026-09-22
+
+A demonstração e sua validação permanecem como histórico. O Navigator redefiniu o produto: a interface de receitas será web, e o Android será apenas uma ponte para enviar URLs à API. Biblioteca e revisão nativas deixam de orientar a implementação futura.

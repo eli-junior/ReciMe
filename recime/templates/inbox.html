@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading"><div><p class="eyebrow">DO SEU FEED PARA A SUA COZINHA</p><h1>Boas receitas começam<br>com uma boa ideia.</h1><p class="lede">Guarde o que despertou sua vontade de cozinhar.<br>Depois, ajuste cada receita com calma.</p></div><div class="heading-stamp" aria-hidden="true"><span>feito<br>do seu jeito</span><i>✳</i></div></section>
+<div class="inbox-layout">
+  <section class="inbox-panel" aria-labelledby="inbox-title">
+    <div class="section-heading"><div><p class="eyebrow">SUA CAIXA DE ENTRADA</p><h2 id="inbox-title">Novas receitas <span class="count" id="ready-count">{{ ready_count }}</span></h2></div><span class="small muted">Para ajustar e guardar</span></div>
+    <p id="poll-message" class="small muted" role="status"></p>
+    <div id="inbox-items" data-poll="inbox">
+      {% for item in items %}
+      <article class="import-card">
+        <div class="recipe-glyph" aria-hidden="true">{{ '✳' if item.state == 'ready' else '↗' }}</div>
+        <div class="card-copy"><span class="status {{ item.state }}">{{ labels[item.state] }}</span><h3>{{ item.draft.title if item.draft and item.draft.title else 'Receita do Instagram' }}</h3><p>{{ item.error or ('Confira os ingredientes e dê seu toque final.' if item.state == 'ready' else 'Você pode sair desta página e voltar depois.') }}</p><span class="source-code">Instagram · {{ item.code }}</span></div>
+        <a class="card-link" href="/imports/{{ item.id }}">{{ 'Ajustar receita' if item.state == 'ready' else 'Ver detalhes' }} <span aria-hidden="true">↗</span></a>
+      </article>
+      {% else %}<div class="empty-state"><div class="empty-icon" aria-hidden="true">✳</div><h3>Uma ideia boa merece ficar.</h3><p>Suas próximas receitas vão aparecer aqui.<br>Comece experimentando a receita de exemplo.</p><button class="text-button" type="button" id="empty-example">Experimentar uma receita <span aria-hidden="true">↗</span></button></div>{% endfor %}
+    </div>
+  </section>
+  <aside><section class="capture-card"><span class="small-label">UM NOVO ACHADO</span><h2>Encontrou algo<br>delicioso?</h2><p>Cole o link para guardar a ideia na sua caixa de entrada.</p>
+    <form id="import-form"><label for="url">Link do Instagram</label><input id="url" name="url" type="url" required maxlength="2048" placeholder="https://www.instagram.com/reel/…" autocomplete="off"><button class="primary full" type="submit">Adicionar à caixa <span aria-hidden="true">↗</span></button>
+    <details class="demo-options"><summary>Opções da demonstração</summary><label for="demo-scenario">Processamento da amostra</label><select id="demo-scenario"><option value="success">Concluir normalmente</option><option value="fail_once">Falhar na primeira tentativa</option></select><p class="small">A opção vale para uma nova importação. Reenvios mantêm o registro existente.</p></details>
+    <p id="import-message" class="feedback" role="status" tabindex="-1"></p></form>
+    <div class="example-block"><p class="small">Por enquanto, só o link de exemplo tem uma receita disponível.</p><button class="text-button" type="button" id="use-example" data-url="{{ demo_url }}">Usar link de exemplo <span aria-hidden="true">→</span></button></div>
+  </section><p class="aside-note"><span aria-hidden="true">✓</span> Você decide o que entra na biblioteca. Nada é salvo lá sem a sua revisão.</p></aside>
+</div>
+{% endblock %}

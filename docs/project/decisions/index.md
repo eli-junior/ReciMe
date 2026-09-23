@@ -6,7 +6,11 @@ Registros preservam decisões e perguntas que devem guiar sessões futuras. Cada
 
 - [Validar fundação técnica e extração](records/2026-09-20T0000Z-validar-fundacao-tecnica-e-extracao.md)
 
-## Decisão da interface
+## Direção atual do produto
+
+- [Interface web e ponte Android](records/2026-09-22T0000Z-interface-web-e-ponte-android.md)
+
+## Decisão histórica da interface
 
 - [Antecipar demonstração Android com Kotlin e Compose](records/2026-09-20T2340Z-antecipar-interface-android.md)
 

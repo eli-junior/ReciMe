@@ -2,10 +2,10 @@
 name = "recime-probe"
 version = "0.0.0"
 requires-python = ">=3.12"
-dependencies = ["yt-dlp", "google-genai", "pydantic>=2", "python-decouple>=3.8"]
+dependencies = ["yt-dlp", "google-genai", "pydantic>=2", "python-decouple>=3.8", "fastapi", "uvicorn", "jinja2", "filelock"]
 
 [dependency-groups]
-dev = ["pytest"]
+dev = ["pytest", "httpx"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

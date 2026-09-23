@@ -1,10 +1,12 @@
 .venv/
+.venv-wsl-backup/
 __pycache__/
 .pytest_cache/
 .env
 .env.*
 !.env.example
 artifacts/
+data/
 .gradle/
 **/build/
 local.properties
